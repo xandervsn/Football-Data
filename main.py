@@ -1,6 +1,7 @@
 import matplotlib.pyplot as plt
 import numpy as np
 import time
+import json
 
 win_score = []
 for i in range(51):
@@ -19,11 +20,11 @@ cur_season = 1970
 
 from pro_football_reference_web_scraper import team_game_log as t
 
-for h in range(len(teams)):
-    for i in range(52):
+for h in range(1):#len(teams)):
+    for i in range(1):
         try:
+            #time.sleep(30)
             game_log = t.get_team_game_log(team = teams[h], season = cur_season)
-            time.sleep(1)
             for j in range(16):
                 try:
                     score =  game_log['points_for'][j]
@@ -35,7 +36,8 @@ for h in range(len(teams)):
                     print()
             cur_season += 1
         except:
-            print("SHIT!")
+            print(teams[h])
+            print(cur_season)
 
 ws_prune = []
 for i in range(51):
@@ -48,6 +50,9 @@ for i in range(51):
     if lose_score[i]:
         for j in range(lose_score[i]):
             ls_prune.append(i)
+
+with open('obj.json', 'w', encoding='utf-8') as f:
+    json.dump(ws_prune, f, ensure_ascii=False, indent=4)
 
 print(len(win_score))
 print(len(lose_score))
