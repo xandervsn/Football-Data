@@ -20,10 +20,10 @@ cur_season = 1970
 
 from pro_football_reference_web_scraper import team_game_log as t
 
-for h in range(1):#len(teams)):
-    for i in range(1):
+for h in range(len(teams)):
+    cur_season = 1970
+    for i in range(53):
         try:
-            #time.sleep(30)
             game_log = t.get_team_game_log(team = teams[h], season = cur_season)
             for j in range(16):
                 try:
@@ -34,10 +34,10 @@ for h in range(1):#len(teams)):
                         lose_score[score] += 1
                 except:
                     print()
-            cur_season += 1
+            print(teams[h], cur_season)
         except:
-            print(teams[h])
-            print(cur_season)
+            print("err", teams[h], cur_season)
+        cur_season += 1
 
 ws_prune = []
 for i in range(51):
@@ -54,8 +54,8 @@ for i in range(51):
 with open('obj.json', 'w', encoding='utf-8') as f:
     json.dump(ws_prune, f, ensure_ascii=False, indent=4)
 
-print(len(win_score))
-print(len(lose_score))
+print((lose_score))
+print((win_score))
 
 print("Win Mean & Stddev:")
 print(np.mean(ws_prune))
